@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1009083984020",
+    "firebase_url": "https://sihapp-26e8f.firebaseio.com",
+    "project_id": "sihapp-26e8f",
+    "storage_bucket": "sihapp-26e8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009083984020:android:a0a3a69e61d454474aac81",
+        "android_client_info": {
+          "package_name": "com.sihapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009083984020-qkuvfmqhkgpjkctiedknhih0o7cvik6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjs79Q3s6a0HRs8N6Ui5_u8b9L5wchKy4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009083984020-qkuvfmqhkgpjkctiedknhih0o7cvik6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
