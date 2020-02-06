@@ -1,6 +1,6 @@
 import React from 'react';
 import { Root } from "native-base";
-import { createAppContainer } from 'react-navigation'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createDrawerNavigator } from 'react-navigation-drawer'
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -13,6 +13,8 @@ import DrawerScreen1 from './screens/DrawerScreen1'
 import DrawerScreen2 from './screens/DrawerScreen2'
 import DrawerScreen3 from './screens/DrawerScreen3'
 import SideBar from "./sidebar";
+import LoginScreen from './screens/LoginScreen'
+import SignUpScreen from './screens/SignUpScreen'
 
 const Tabs = createMaterialBottomTabNavigator({
   BottomTabScreen1: BottomTabScreen1,
@@ -37,7 +39,7 @@ const Drawer = createDrawerNavigator(
     DrawerScreen3: { screen: DrawerScreen3 },
   },
   {
-    initialRouteName: "HomeScreen",
+    initialRouteName: "DrawerScreen2", //TODO: CHANGE TO HomeScreen
     contentOptions: {
       activeTintColor: "#e91e63"
     },
@@ -46,12 +48,14 @@ const Drawer = createDrawerNavigator(
 );
 
 
-const AppNavigator = createStackNavigator(
+const AppNavigator = createSwitchNavigator(
   {
     Drawer: { screen: Drawer },
+    LoginScreen :{ screen: LoginScreen},
+    SignUpScreen : {screen: SignUpScreen}
   },
   {
-    initialRouteName: "Drawer",
+    initialRouteName: "Drawer", //TODO :change to signup screen
     headerMode: "none"
   }
 );
@@ -62,3 +66,16 @@ export default () =>
   <Root>
     <AppContainer />
   </Root>;
+
+
+/*export default createAppContainer(createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingScreen,
+    App: AppStack,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  }
+));
+*/

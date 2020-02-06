@@ -180,6 +180,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-cardview')
+    implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation "com.facebook.react:react-native:+"  // From node_modules

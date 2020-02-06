@@ -16,15 +16,15 @@ const datas = [
         bg: "#C5F442"
     },
     {
-        name: "DrawerScreen 1",
+        name: "Test",
         route: "DrawerScreen1",
-        icon: "phone-portrait",
+        icon: "paper",
         bg: "#C5F442"
     },
     {
-        name: "DrawerScreen 2",
+        name: "Result",
         route: "DrawerScreen2",
-        icon: "phone-portrait",
+        icon: "bulb",
         bg: "#C5F442"
     },
     {

@@ -1,40 +1,32 @@
 import React, { Component } from "react";
 import { ImageBackground, View, StatusBar, Dimensions, Platform, StyleSheet } from "react-native";
-import { Container, Button, H3, Text } from "native-base";
+import { Container, Button, H3, Text, Header, Left, Right, Body, Title, } from "native-base";
 
 const deviceHeight = Dimensions.get("window").height;
-const launchscreenBg = require("../../assets/launchscreen-bg.png");
+const launchscreenBg = require("../../assets/db6574-01.png");
 // const launchscreenLogo = require("../../../assets/logo-kitchen-sink.png");
 
 export default class HomeScreen extends Component {
   render() {
     return (
-      <Container>
-        <StatusBar barStyle="light-content" />
-        <ImageBackground source={launchscreenBg} style={styles.imageContainer}>
-          <View style={styles.logoContainer}>
-            {/* <ImageBackground source={launchscreenLogo} style={styles.logo} /> */}
-          </View>
-          <View
-            style={{
-              alignItems: "center",
-              marginBottom: 50,
-              backgroundColor: "transparent"
-            }}
+      <Container style={styles.container}>
+        <Header style={{ backgroundColor: "#22252a" }}>
+
+          <Body style={{ marginLeft: 40 }}>
+            <Title>Home</Title>
+          </Body>
+          <Right />
+        </Header>
+        <ImageBackground
+          source={launchscreenBg} style={styles.imageContainer}>
+          <H3 style={styles.text}> Dashboard </H3>
+
+          <Button
+            style={styles.button}
+            onPress={() => this.props.navigation.openDrawer()}
           >
-            <H3 style={styles.text}>My App</H3>
-            <View style={{ marginTop: 16 }} />
-            {/* <H3 style={styles.text}></H3> */}
-            {/* <View style={{ marginTop: 8 }} /> */}
-          </View>
-          <View style={{ marginBottom: 80 }}>
-            <Button
-              style={{ backgroundColor: "#6FAF98", alignSelf: "center" }}
-              onPress={() => this.props.navigation.openDrawer()}
-            >
-              <Text>Lets Go!</Text>
-            </Button>
-          </View>
+            <Text>Lets Go!</Text>
+          </Button>
         </ImageBackground>
       </Container>
     );
@@ -44,25 +36,20 @@ export default class HomeScreen extends Component {
 const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
-    width: null,
-    height: null
+    alignContent: 'center',
+    justifyContent: 'center',
   },
-  logoContainer: {
-    flex: 1,
-    marginTop: deviceHeight / 8,
-    marginBottom: 30
+  button: {
+    backgroundColor: "#22252a", //black
+    alignSelf: "center",
   },
-  logo: {
-    position: "absolute",
-    left: Platform.OS === "android" ? 40 : 50,
-    top: Platform.OS === "android" ? 35 : 60,
-    width: 280,
-    height: 100
+  container: {
+    backgroundColor: "#22252a", //black
   },
   text: {
-    color: "#D8D8D8",
-    bottom: 6,
-    marginTop: 5
+    alignSelf:'center',
+    justifyContent:'center',
+    color: '#22252a',
   }
 })
 
