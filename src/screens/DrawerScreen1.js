@@ -51,8 +51,7 @@ export default class DrawerScreen1 extends React.Component {
 
         <View style={{ flex: 1 }}>
 
-          {/* TODO: change negative sign */}
-          {!this.state.quizFinish
+          {this.state.quizFinish
             ? //if quiz finished, render score card
             <View style={styles.container}>
               <View>

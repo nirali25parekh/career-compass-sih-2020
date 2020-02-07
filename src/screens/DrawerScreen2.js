@@ -4,30 +4,30 @@ import { Container, Icon, Button, H3, Text, Header, Right, Body, Title, Card, Ca
 import ProgressCircle from 'react-native-progress-circle'
 import * as Progress from 'react-native-progress';
 import CardView from 'react-native-cardview'
-import { BarChart, Grid , PieChart} from 'react-native-svg-charts'
+import { BarChart, Grid, PieChart, LineChart } from 'react-native-svg-charts'
 
 const deviceHeight = Dimensions.get("window").height;
 const launchscreenBg = require("../../assets/launchscreen-bg.png");
 
 export default class DrawerScreen2 extends Component {
   render() {
-    const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
+    const data = [50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80]
 
-    const barData   = [ 50, 10, 40, 95, -4, -24, null, 85, undefined, 0, 35, 53, -53, 24, 50, -20, -80 ]
- 
-        const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7)
- 
-        const pieData = data
-            .filter(value => value > 0)
-            .map((value, index) => ({
-                value,
-                svg: {
-                    fill: randomColor(),
-                    onPress: () => console.log('press', index),
-                },
-                key: `pie-${index}`,
-            }))
- 
+    const barData = [50, 10, 40, 95, -4, -24, null, 85, undefined, 0, 35, 53, -53, 24, 50, -20, -80]
+
+    const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7)
+
+    const pieData = data
+      .filter(value => value > 0)
+      .map((value, index) => ({
+        value,
+        svg: {
+          fill: randomColor(),
+          onPress: () => console.log('press', index),
+        },
+        key: `pie-${index}`,
+      }))
+
     return (
 
       <Container style={styles.container}>
@@ -236,33 +236,33 @@ export default class DrawerScreen2 extends Component {
             cardElevation={2}
             cardMaxElevation={2}
             cornerRadius={5}>
-            <View>
-              <Text>
-               Computer Engineering
+            <View style={{ flexDirection: 'row' }}>
+              <View>
+                <Text>
+                  Computer Engineering
                 </Text>
-              <Text>
-                An upcoming field
+                <Text>
+                  An upcoming field
                 </Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <View style={{flexDirection: 'column'}}>
-                  <Text>
-                    $74000
+                {/* <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'column' }}> */}
+                <Text>
+                  $74000
                   </Text>
-                  <Text>
-                    Avg. Salary
+                <Text>
+                  Avg. Salary
                   </Text>
-                  </View>
-                  <BarChart
-                style={{ height: 200, width:100 }}
-                data={ barData }
-                svg='rgb(244,244,244)'
-                contentInset={{ top: 30, bottom: 30 }}
-            >
-                <Grid/>
-            </BarChart>
-  
-                  </View>
+              </View>
+              <LineChart
+                style={styles.lineChart}
+                data={data}
+                svg={{ stroke: 'rgb(134, 65, 244)' }}
+                contentInset={{ top: 20, bottom: 20 }}
+              >
+                <Grid />
+              </LineChart>
             </View>
+            {/* </View> */}
           </CardView>
 
 
@@ -272,30 +272,31 @@ export default class DrawerScreen2 extends Component {
             cardElevation={2}
             cardMaxElevation={2}
             cornerRadius={5}>
-            <View>
-              <Text>
-               Computer Engineering
+            <View style={{ flexDirection: 'row' }}>
+              <View>
+                <Text>
+                  Marketing
                 </Text>
-              <Text>
-                An upcoming field
+                <Text>
+                  An upcoming field
                 </Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <View style={{flexDirection: 'column'}}>
-                  <Text>
-                    $74000
+                {/* <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'column' }}> */}
+                <Text>
+                  $34,000
                   </Text>
-                  <Text>
-                    Avg. Salary
+                <Text>
+                  Avg. Salary
                   </Text>
-                  </View>
+              </View>
 
-                  <PieChart
-                  
-                style={ styles.pieChart }
-                data={ pieData }
-            />
-                  </View>
+              <PieChart
+
+                style={styles.pieChart}
+                data={pieData}
+              />
             </View>
+            {/* </View> */}
           </CardView>
 
           <CardView
@@ -303,39 +304,35 @@ export default class DrawerScreen2 extends Component {
             cardElevation={2}
             cardMaxElevation={2}
             cornerRadius={5}>
-            <View>
-              <Text>
-               Computer Engineering
+            <View style={{ flexDirection: 'row' }}>
+              <View>
+                <Text>
+                  Lawyer
                 </Text>
-              <Text>
-                An upcoming field
+                <Text>
+                  An established field
                 </Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <View style={{flexDirection: 'column'}}>
-                  <Text>
-                    $74000
-                  </Text>
-                  <Text>
-                    Avg. Salary
-                  </Text>
-                  </View>
 
-                  <BarChart
-                style={{ height: 200 , width: 100}}
-                data={ barData }
-                svg='rgb(244,244,244)'
-                contentInset={{ top: 0, bottom: 0 }}
-            >
-                <Grid/>
-            </BarChart>
-  
-                  </View>
+                {/* <View style={{ flexDirection: 'column' }}> */}
+                <Text>
+                  $15,600
+                  </Text>
+                <Text>
+                  Avg. Salary
+                  </Text>
+              </View>
+
+              <LineChart
+                style={styles.lineChart}
+                data={data}
+                svg={{ stroke: 'rgb(134, 65, 244)' }}
+                contentInset={{ top: 20, bottom: 20 }}
+              >
+                <Grid />
+              </LineChart>
             </View>
+            {/* </View> */}
           </CardView>
-
-
-
-
 
         </ScrollView>
       </Container >
@@ -385,9 +382,13 @@ const styles = StyleSheet.create({
   progressCircle: {
     marginHorizontal: 20,
   },
-  pieChart:{
-    height:80,
-    width:80,
+  pieChart: {
+    height: 80,
+    width: 80,
+  },
+  lineChart: {
+    height: 100,
+    width: 100
   }
 
 })

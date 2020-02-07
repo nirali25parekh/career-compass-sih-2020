@@ -163,4 +163,3 @@ const styles = StyleSheet.create({
     backgroundColor: "#db6574"
   }
 });
-

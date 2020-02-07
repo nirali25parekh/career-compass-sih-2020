@@ -39,7 +39,7 @@ const Drawer = createDrawerNavigator(
     DrawerScreen3: { screen: DrawerScreen3 },
   },
   {
-    initialRouteName: "DrawerScreen2", //TODO: CHANGE TO HomeScreen
+    initialRouteName: "HomeScreen", //TODO: CHANGE TO HomeScreen
     contentOptions: {
       activeTintColor: "#e91e63"
     },
