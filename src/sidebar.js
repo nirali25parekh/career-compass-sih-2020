@@ -6,15 +6,15 @@ const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 
 
-const drawerCover = require("../assets/drawer-cover.png");
+const drawerCover = require("../assets/nouristic_logo.png");
 //const drawerImage = require("../../../assets/logo-kitchen-sink.png");
 const datas = [
-    {
-        name: "DrawerScreen 0",
-        route: "DrawerScreen0",
-        icon: "phone-portrait",
-        bg: "#C5F442"
-    },
+    // {
+    //     name: "DrawerScreen 0",
+    //     route: "DrawerScreen0",
+    //     icon: "phone-portrait",
+    //     bg: "#C5F442"
+    // },
     {
         name: "Test",
         route: "DrawerScreen1",
@@ -28,9 +28,9 @@ const datas = [
         bg: "#C5F442"
     },
     {
-        name: "DrawerScreen 3",
+        name: "Find Contacts",
         route: "DrawerScreen3",
-        icon: "phone-portrait",
+        icon: "people",
         bg: "#C5F442"
     },
 ];
@@ -49,7 +49,7 @@ export default class SideBar extends Component {
             <Container>
                 <Content
                     bounces={false}
-                    style={{ flex: 1, backgroundColor: "#fff", top: -1 }}
+                    style={{ flex: 1, backgroundColor: "#22252a", top: -1 }}
                 >
                     <Image source={drawerCover} style={styles.drawerCover} />
                     {/* <Image square style={styles.drawerImage} source={drawerImage} /> */}
@@ -66,7 +66,7 @@ export default class SideBar extends Component {
                                     <Icon
                                         active
                                         name={data.icon}
-                                        style={{ color: "#777", fontSize: 26, width: 30 }}
+                                        style={{ color: "white", fontSize: 26, width: 30 }}
                                     />
                                     <Text style={styles.text}>
                                         {data.name}
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     },
     drawerImage: {
         position: "absolute",
+        color:'white',
         left: Platform.OS === "android" ? deviceWidth / 10 : deviceWidth / 9,
         top: Platform.OS === "android" ? deviceHeight / 13 : deviceHeight / 12,
         width: 210,
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
     text: {
         fontWeight: Platform.OS === "ios" ? "500" : "400",
         fontSize: 16,
+        color:'white',
         marginLeft: 20
     },
     badgeText: {

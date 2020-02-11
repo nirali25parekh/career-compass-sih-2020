@@ -44,20 +44,22 @@ export default class Quiz extends Component {
     if (this.qno < arrnew.length - 1) {
       this.qno++
       // status = false
-      this.setState({ countCheck: 0, question: arrnew[this.qno].question, options: arrnew[this.qno].options, correctoption: arrnew[this.qno].correctoption })
+      this.setState({ status: false, countCheck: 0, question: arrnew[this.qno].question, options: arrnew[this.qno].options, correctoption: arrnew[this.qno].correctoption })
     } else {
       this.props.quizFinish(this.score * 100 / 5)
     }
   }
   _answer(status, ans) {
-    if (status == true) {
-      const count = this.state.countCheck + 1
-      this.setState({ countCheck: count })
-      if (ans == this.state.correctoption) {
-        this.score += 1
-      }
-    }
-    console.warn("countcheck ", this.state.countCheck)
+    this.next()
+    // if (status == true) {
+    //   const count = this.state.countCheck + 1
+      // this.setState({ countCheck: count })
+      // if (ans == this.state.correctoption) {
+      //   this.score += 1
+      // }
+    // }
+    // console.warn("countcheck ", this.state.countCheck)
+    // this.setState({status: false})
   }
 
   render() {
@@ -72,7 +74,7 @@ export default class Quiz extends Component {
       return (<View key={k} style={styles.optionButton}>
         <AnimButton
           countCheck={_this.state.countCheck}
-          onColor={"blue"}
+          // onColor={"blue"}
           effect={"tada"}
           _onPress={(status) => _this._answer(status, k)}
           text={currentOptions[k]} />
@@ -99,7 +101,7 @@ export default class Quiz extends Component {
             </View>
 
             {/* prev & next button */}
-            <View style={{ flexDirection: "row", margin: 15 }}>
+            {/* <View style={{ flexDirection: "row", margin: 15 }}>
 
               <TouchableOpacity onPress={() => this.next()} >
                 <View style={styles.arrowButton}>
@@ -114,7 +116,7 @@ export default class Quiz extends Component {
                 </View>
               </TouchableOpacity >
 
-            </View>
+            </View> */}
 
           </View>
           <View style={{marginTop:20, height:540, width:20, backgroundColor:'#db6574',  borderRadius: 20,}}/>

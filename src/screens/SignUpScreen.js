@@ -6,6 +6,10 @@ import { CheckBox } from 'react-native-elements'
 const source = require("../../assets/db6574-01.png")
 
 export default class MySignUpScreen extends React.Component {
+    componentDidMount() {
+        console.disableYellowBox = true;
+      }
+      
     state = {
         switchValue: false,
         username: '',

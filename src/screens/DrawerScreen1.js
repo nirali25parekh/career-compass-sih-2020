@@ -10,6 +10,10 @@ import Quiz from "../Quiz";
 
 export default class DrawerScreen1 extends React.Component {
 
+  componentDidMount() {
+    console.disableYellowBox = true;
+  }
+
   constructor(props) {
     super(props)
     this.state = {

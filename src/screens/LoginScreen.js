@@ -3,9 +3,12 @@ import { View, TextInput, Button, TouchableOpacity, StyleSheet, Text, Image, Tou
 import { Icon , Container, Header, Left, Right, Body,Title} from 'native-base'
 import { Switch } from 'react-native-switch'
 
-const source = require("../../assets/db6574-01.png")
+const source = require("../../assets/nouristic_logo.png")
 
 export default class LoginScreen extends React.Component {
+    componentDidMount() {
+        console.disableYellowBox = true;
+      }
     state = {
         switchValue: false,
         username: '',

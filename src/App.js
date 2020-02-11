@@ -55,7 +55,7 @@ const AppNavigator = createSwitchNavigator(
     SignUpScreen : {screen: SignUpScreen}
   },
   {
-    initialRouteName: "Drawer", //TODO :change to signup screen
+    initialRouteName: "LoginScreen", //TODO :change to signup screen
     headerMode: "none"
   }
 );

@@ -8,11 +8,11 @@ export default class AnimButton extends Component {
     this.state = {
       status: false
     }
-    console.warn("status is ", this.state.status)
+    // console.warn("status is ", this.state.status)
   }
 
   _onPress() {
-    this.props._onPress(!this.state.status)
+    this.props._onPress()
     console.warn("status is ", this.state.status)
     this.setState({ status: !this.state.status }) // reverses on touching
     switch (this.props.effect) {
@@ -62,11 +62,11 @@ export default class AnimButton extends Component {
             // paddingLeft: 20, 
             backgroundColor: 'rgba(0,0,0,1)',
             borderRadius: 10,
-            backgroundColor: this.state.status ? "#db6574" : "#22252a" //button when selected : when not
+            backgroundColor: this.state.status ? "#22252a" : "#22252a" //button when selected : when not
           }}>
 
           {/* option's text --> status, if true(ie selected)->black otherwise white */}
-          <Text style={{ color: this.state.status ? "black" : "white", fontWeight: "bold" }}>{this.props.text}</Text>
+          <Text style={{ color: this.state.status ? "white" : "white", fontWeight: "bold" }}>{this.props.text}</Text>
 
         </Animatable.View>
       </TouchableWithoutFeedback>
