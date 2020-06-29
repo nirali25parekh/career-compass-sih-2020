@@ -10,10 +10,10 @@ CORS(app, support_credentials=True)
 
 # Create an app: https://www.reddit.com/prefs/apps
 # Use http://localhost:8080 as redirect uri
-username = "digitalchaos123"
-password = "digitalchaos123"
-clientid = "8Lqn66LhUBDv-w"
-clientsecret = "hpMcf-vtl5TTvTc1jfm85GoJJ_Q"
+username = "insertyourusername"
+password = "insertyourpassword"
+clientid = "insertyourid"
+clientsecret = "insertyoursecret"
 
 #Source: https://www.iccb.org/iccb/wp-content/pdfs/adulted/tdl_bridge_curriculum/tdl_career_awareness/tdl_career_aware_resource_file/Suggested_Careers_for_MBTI.pdf
 careers={'ESTJ':['Military', 'business administrators', 'managers', 'police/detective work', 'judges', 'financial officers', 'teachers', 'sales representatives', 'government workers', 'insurance agents', 'underwriters', 'nursing administrators', 'trade' ,'technical teachers'],
