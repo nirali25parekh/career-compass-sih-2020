@@ -1,131 +1,173 @@
 import React, { Component } from 'react';
 // import { ImageBackground, View, StatusBar, Dimensions, Platform, StyleSheet } from "react-native";
 import { Container, Header, Body, Title, Right } from 'native-base';
-import { StyleSheet, TouchableOpacity, View, Text, Dimensions, Platform, TouchableHighlight } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, Dimensions, Platform, TouchableHighlight, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Quiz from "../Quiz";
-
-// const deviceHeight = Dimensions.get("window").height;
-// const launchscreenBg = require("../../assets/launchscreen-bg.png");
+import quizData from '../questionsJson'
 
 export default class DrawerScreen1 extends React.Component {
 
-  componentDidMount() {
-    console.disableYellowBox = true;
+  _onPressBack() {
+    const { goBack } = this.props.navigation
+    goBack()
+  }
+
+  prevPressed = () => {
+    this.setState((prevState) => {
+      return {
+        questionNo: prevState.questionNo - 1
+      }
+    })
+  }
+
+  nextPressed = () => {
+    this.setState((prevState) => {
+      return {
+        questionNo: prevState.questionNo + 1
+      }
+    })
   }
 
   constructor(props) {
     super(props)
     this.state = {
       quizFinish: false,
-      score: 0,
+      questionNo: 0,
+      result: null,
     }
   }
-  _onPressBack() {
-    const { goBack } = this.props.navigation
-    goBack()
-  }
-  _quizFinish(score) {
-    this.setState({ quizFinish: true, score: score })
+
+
+  submitPressed = (selectedOptionsArray) => {
+    var EI = 0
+    var SN = 0
+    var TF = 0
+    var JP = 0
+    for (let i = 0; i < 21; i++) {
+      if (quizData.category[i] === "EI") {
+        EI = EI + quizData.scoring[selectedOptionsArray[i]]
+      }
+      if (quizData.category[i] === "SN") {
+        SN = SN + quizData.scoring[selectedOptionsArray[i]]
+      }
+      if (quizData.category[i] === "TN") {
+        TF = TF + quizData.scoring[selectedOptionsArray[i]]
+      }
+      if (quizData.category[i] === "JP") {
+        JP = JP + quizData.scoring[selectedOptionsArray[i]]
+      }
+    }
+    var result = ""
+    if (EI < 0)
+      result += "I"
+    else
+      result += "E"
+
+    if (SN < 0)
+      result += "N"
+    else
+      result += "S"
+
+
+    if (TF < 0)
+      result += "F"
+    else
+      result += "T"
+
+    if (JP < 0)
+      result += "P"
+    else
+      result += "J"
+    console.log('RESULT', result)
+    this.setState({
+      result: result,
+      quizFinish: true,
+    })
   }
 
-  _getResultButtonPressed = ()=>{
-    this.props.navigation.navigate('DrawerScreen2')
+  getResultButtonPressed = async () => {
+    try {
+      var formData = new FormData()
+      formData.append('file', this.state.result)
+      const domains = await fetch('http://localhost:5000/domain', {
+        method: 'POST',
+        body: formData,
+      })
+      const domainsJSON = await domains.json()
+      console.log('domainsjson', domainsJSON)
+
+      const reasons = await fetch('http://localhost:5000/reason', {
+        method: 'POST',
+        body: formData,
+      })
+      const reasonsJSON = await reasons.json()
+      console.log('reasonsjson', reasonsJSON)
+
+      this.props.navigation.navigate('DrawerScreen2', { domains: domainsJSON, reasons: reasonsJSON, personalityType: this.state.result,})
+    } catch (err){
+      console.log(err)
+    }
+    
+    
   }
-  _scoreMessage(score) {
-    return (<View>
-      <Text style={{fontSize:30, textAlign: 'center'}}>
-        You have completed the quiz.
-      </Text>
-      <TouchableHighlight style={[styles.buttonContainer, styles.getResultButton]} onPress={this._getResultButtonPressed}>
-        <Text style={styles.getResultButtonText}>Get your results</Text>
-      </TouchableHighlight>
-    </View>)
-  }
+
   render() {
     return (
-      <Container>
+      <Container >
         <Header style={{ backgroundColor: "#22252a" }}>
-
           <Body style={{ marginLeft: 40 }}>
             <Title>Quiz</Title>
           </Body>
           <Right />
         </Header>
 
-        <View style={{ flex: 1 }}>
 
-          {this.state.quizFinish
-            ? //if quiz finished, render score card
-            <View style={styles.container}>
+        <View style={styles.container}>
+
+          {
+            this.state.quizFinish
+              ?
+              //if quiz finished, render score card
               <View>
-                {this._scoreMessage(this.state.score)}
+                <Text style={{ fontSize: 30, textAlign: 'center', color: 'white', }}> You have completed the quiz.</Text>
+                <TouchableHighlight style={[styles.buttonContainer, styles.getResultButton]} onPress={this.getResultButtonPressed}>
+                  <Text style={styles.getResultButtonText}>Get your results</Text>
+                </TouchableHighlight>
               </View>
-            </View>
-            : //if quiz not finished, render quiz questions
-            <Quiz quizFinish={(score) => this._quizFinish(score)} /> //one question of the quiz
+
+
+              : //if quiz not finished, render quiz questions
+              <Quiz
+                prevPressed={this.prevPressed}
+                nextPressed={this.nextPressed}
+                submitPressed={this.submitPressed}
+                questionNo={this.state.questionNo} />
           }
+
         </View>
 
-      </Container>
+      </Container >
     );
   }
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {
-    flex: 1,
-    width: null,
-    height: null
-  },
   container: {
     flex: 1,
+    backgroundColor: "#22252a",
     alignItems: "center",
-    justifyContent: 'center',
-    backgroundColor: "transparent",
+    padding: 20,
   },
   text: {
     color: "#D8D8D8",
-  },
-  score: {
-    color: "white",
-    fontSize: 20,
-    fontStyle: 'italic'
-  },
-  innerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  toolbar: {
-    backgroundColor: '#81c04d',
-    paddingTop: 30,
-    paddingBottom: 10,
-    flexDirection: 'row'
-  },
-  toolbarButton: {
-    width: 55,
-    color: '#fff',
-    textAlign: 'center'
-  },
-  toolbarTitle: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    flex: 1
   },
   buttonContainer: {
     height: 50,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf : 'center',
+    alignSelf: 'center',
     marginBottom: 10,
     marginTop: 12,
     width: 100,
@@ -133,7 +175,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#db6574",
   },
   getResultButton: {
-    marginTop:60,
+    marginTop: 60,
     // backgroundColor: "blue",
     // justifyContent: 'center',
     // alignItems: 'center',
@@ -141,7 +183,7 @@ const styles = StyleSheet.create({
   },
   getResultButtonText: {
     color: 'black',
-    textAlign:'center'
+    textAlign: 'center'
   }
 })
 

@@ -1,0 +1,6 @@
+venv
+static
+templates
+.idea/
+__pycache__/
+reddit-data.csv

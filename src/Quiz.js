@@ -1,167 +1,152 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View, Button, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AnimButton from './animButton'
-import { jsonData } from './questionsJson'
+// import AnimButton from './animButton'
+import quizData from './questionsJson'
 const { width, height } = Dimensions.get('window')
-let arrnew = []
-
-
 
 export default class Quiz extends Component {
   constructor(props) {
     super(props)
-    this.qno = 0
-    this.score = 0
-
-    const jdata = jsonData.quiz
-    arrnew = Object.keys(jdata).map(function (k) { return jdata[k] });
-
-    /*arrnew is the array of question objects.
-       ques field is initialised to arrnew[0].question 
-       options field is initialed to arrnew[0].options
-       correctoption field is initialed to arrnew[0].correctoption*/
     this.state = {
-      question: arrnew[this.qno].question,
-      options: arrnew[this.qno].options,
-      correctoption: arrnew[this.qno].correctoption,
-      countCheck: 0
-    }
-
-  }
-
-  // componentDidMount() {
-  //   console.warn(arrnew)
-  // }
-
-  prev() {
-    if (this.qno > 0) {
-      this.qno--
-      this.setState({ question: arrnew[this.qno].question, options: arrnew[this.qno].options, correctoption: arrnew[this.qno].correctoption })
+      scoreArray: Array(21),
+      selectedOptionArray: [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
     }
   }
-  next() {
-    if (this.qno < arrnew.length - 1) {
-      this.qno++
-      // status = false
-      this.setState({ status: false, countCheck: 0, question: arrnew[this.qno].question, options: arrnew[this.qno].options, correctoption: arrnew[this.qno].correctoption })
-    } else {
-      this.props.quizFinish(this.score * 100 / 5)
-    }
-  }
-  _answer(status, ans) {
-    this.next()
-    // if (status == true) {
-    //   const count = this.state.countCheck + 1
-      // this.setState({ countCheck: count })
-      // if (ans == this.state.correctoption) {
-      //   this.score += 1
-      // }
-    // }
-    // console.warn("countcheck ", this.state.countCheck)
-    // this.setState({status: false})
+
+  addScore = (index) => {
+    const newScoreArray = [...this.state.scoreArray]
+    newScoreArray[this.props.questionNo] = quizData.scoring[index]
+
+
+    const newSelectedOptionsArray = [...this.state.selectedOptionArray]
+    newSelectedOptionsArray[this.props.questionNo] = index // for  styling
+    this.setState(
+      {
+        selectedOptionArray: newSelectedOptionsArray,
+        scoreArray: newScoreArray,
+      }
+    )
   }
 
   render() {
 
-    // if(this.state.countCheck == 1){
-    //   this.next()
-    // }
-    let _this = this
-    const currentOptions = this.state.options //object of options
-
-    const options = Object.keys(currentOptions).map(function (k) {
-      return (<View key={k} style={styles.optionButton}>
-        <AnimButton
-          countCheck={_this.state.countCheck}
-          // onColor={"blue"}
-          effect={"tada"}
-          _onPress={(status) => _this._answer(status, k)}
-          text={currentOptions[k]} />
-      </View>)
-    });
-
     return (
-      <ScrollView style={{ backgroundColor: '#212121', paddingTop: 10 }}>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ marginTop: 20, height: 540, width: 20, backgroundColor: '#db6574', borderRadius: 20, }} />
+  
+        <View style={styles.container}>
+          <Text style={styles.questionNo}> {this.props.questionNo+1} / 21</Text>
+          <Text style={styles.question}> {quizData.questions[this.props.questionNo]}</Text>
 
-          <View style={styles.container}>
+          {/* options */}
+          <View style={styles.optionContainer}>
+            <Text style={this.state.selectedOptionArray[this.props.questionNo] === 0 ? styles.optionsSelected : styles.optionsUnselected} onPress={() => this.addScore(0)}> {quizData.options[0]}</Text>
+            <Text  style={this.state.selectedOptionArray[this.props.questionNo] === 1 ? styles.optionsSelected : styles.optionsUnselected} onPress={() => this.addScore(1)}> {quizData.options[1]}</Text>
+            <Text style={this.state.selectedOptionArray[this.props.questionNo] === 2 ? styles.optionsSelected : styles.optionsUnselected} onPress={() => this.addScore(2)}> {quizData.options[2]}</Text>
+            <Text  style={this.state.selectedOptionArray[this.props.questionNo] === 3 ? styles.optionsSelected : styles.optionsUnselected} onPress={() => this.addScore(3)}> {quizData.options[3]}</Text>
+            <Text style={this.state.selectedOptionArray[this.props.questionNo] === 4 ? styles.optionsSelected : styles.optionsUnselected} onPress={() => this.addScore(4)}> {quizData.options[4]}</Text>
+          </View>
+          {/* <Text style={{color:'white'}}> score: {this.state.scoreArray.toString()}</Text> */}
+          {/* <Text style={{color:'white'}}> selected: {this.state.selectedOptionArray.toString()}</Text> */}
 
-            {/* question view */}
-            <View style={styles.oval} >
-              <Text style={styles.questionText}>
-                {this.state.question}
-              </Text>
-            </View>
-
-            {/* options view */}
-            <View>
-              {options}
-            </View>
-
-            {/* prev & next button */}
-            {/* <View style={{ flexDirection: "row", margin: 15 }}>
-
-              <TouchableOpacity onPress={() => this.next()} >
-                <View style={styles.arrowButton}>
-                  <Icon name="md-arrow-round-back" size={30} color="white" />
-                </View>
-              </TouchableOpacity >
-              <View style={{ marginHorizontal: 65 }} />
-
-              <TouchableOpacity onPress={() => this.next()} >
-                <View style={styles.arrowButton}>
-                  <Icon name="md-arrow-round-forward" size={30} color="white" />
-                </View>
-              </TouchableOpacity >
-
-            </View> */}
+          {/*  button */}
+          <View style={styles.buttonGroup}>
+            {
+              this.props.questionNo === 0
+                ?
+                <View style={[styles.button,{backgroundColor:"transparent"}]} />
+                :
+                <TouchableOpacity onPress={this.props.prevPressed} style={styles.button}>
+                  <Text style={styles.buttonText}> Prev </Text>
+                </TouchableOpacity>
+            }
+            { // 21 question are there
+              this.props.questionNo === 20
+                ?
+                <TouchableOpacity onPress={()=> this.props.submitPressed(this.state.selectedOptionArray)} style={styles.button}>
+                  <Text style={styles.buttonText}> Submit </Text>
+                </TouchableOpacity>
+                :
+                <TouchableOpacity onPress={this.props.nextPressed} style={styles.button}>
+                  <Text style={styles.buttonText}> Next </Text>
+                </TouchableOpacity>
+            }
 
           </View>
-          <View style={{marginTop:20, height:540, width:20, backgroundColor:'#db6574',  borderRadius: 20,}}/>
         </View>
-      </ScrollView>
+
     );
   }
 }
 
 const styles = StyleSheet.create({
-  oval: { //question
-    width: width * 80 / 100,
-    borderRadius: 20,
-    minHeight: 150,
-    fontWeight: 'bold',
-    // backgroundColor: 'blue'
+  buttonGroup:{
+    // backgroundColor:'#BDBDBD',
+    flexDirection:'row',
+    marginTop: 30,
+    // alignItems:"baseline",
+    // padding: 20,
   },
-  container: { //ques and options container
-    flex: 1,
-    marginTop: 20,
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#22252a',
-    alignItems: 'center',
-    marginHorizontal: 16,
-    borderRadius: 15,
+  button:{
+    // flex: 1,
+    // alignContent:'center',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:'#db6574',
+    padding: 20,
+    paddingVertical:10,
+    borderRadius:6,
+    marginHorizontal: 50,
+    
   },
-  questionText: { //question text
-    fontSize: 20,
-    // paddingHorizontal:1,
-    margin: 15,
-    color: "white"
+  buttonText:{
+    fontSize:20,
   },
-  optionButton: { //single single option
-    // backgroundColor: 'blue',
-    paddingHorizontal: 10,
-    width: Dimensions.get('screen').width * 0.8
+  container:{
+    alignItems:'center',
+    // marginHorizontal: 40,
+    // borderRadius: 10,
+    // borderRadius: 20,
   },
-  arrowButton: {
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingRight: 20,
-    paddingLeft: 20,
+  optionContainer:{
     borderRadius: 10,
-    marginTop: 20,
-    backgroundColor: "#db6574"
+    width:310,
+  },
+  optionsUnselected:{
+    fontSize: 20,
+    textAlign: 'center',
+    paddingVertical: 10,
+    backgroundColor:'#CFD8DC',
+    marginTop: 4,
+    borderRadius:6,
+  },
+  optionsSelected:{
+    fontSize: 20,
+    textAlign: 'center',
+    paddingVertical: 10,
+    backgroundColor:'#db6574',
+    marginTop: 4,
+    borderRadius:6,
+  },
+  question:{
+    lineHeight:25,
+    fontSize: 17,
+    textAlign: 'center',
+    textAlignVertical:'center',
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    height: 130,
+    width:310,
+    backgroundColor:'#CFD8DC',
+    borderRadius: 10,
+    marginBottom:10,
+  },
+  questionNo:{
+    fontSize: 20,
+    textAlign: 'center',
+    paddingVertical: 10,
+    backgroundColor:'#CFD8DC',
+    borderRadius: 10,
+    width:310,
+    marginVertical:10,
   }
 });
